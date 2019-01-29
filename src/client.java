@@ -18,6 +18,8 @@ public class client {
         p.println(by);
         temp=sc1.nextLine();
         System.out.println(temp);
+
+
     }
 
 }

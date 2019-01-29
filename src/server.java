@@ -2,17 +2,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class server {
 
-    public static void main(String[] args) throws IOException {
+    String id;
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         String by, temp;
        ServerSocket s1 = new ServerSocket(5555);
        Socket ss = s1.accept();
@@ -21,12 +20,12 @@ public class server {
 
        temp = by;
        PrintStream p = new PrintStream(ss.getOutputStream());
-       p.println(temp);
+       p.println(temp.toUpperCase());
 
         String search = "https://www.google.com/search?q=" + temp + "+" + "time";
-        SimpleDateFormat date_format=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-        java.util.Date date = new Date();
-        String worldTime = date_format.format(date);
+        //SimpleDateFormat date_format=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        //java.util.Date date = new Date();
+        //String worldTime = date_format.format(date);
 
         Document doc = null;
         try {
@@ -37,15 +36,17 @@ public class server {
         System.out.println(doc.title());
 
         Element contentDiv = doc.select("div[class=gsrt vk_bk dDoNo]").first();
+        Element contentDivK = doc.select("div[class=vk_gy vk_sh]").first();
+
 
         if(contentDiv == null) {
             System.out.println("Kunne ikke funne lokaltid til " + temp);
            // return "Kunne ikke funne lokaltid";
         }
 
-        String text = contentDiv.getElementsByTag("div").text();
+        String text = contentDivK.getElementsByTag("div").text();
+        text += " " + contentDiv.getElementsByTag("div").text();
         System.out.println(text);
-
 
     }
 
