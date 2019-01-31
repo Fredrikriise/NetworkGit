@@ -8,8 +8,9 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.Scanner;
 
-public class client {
 
+
+public class Client2 {
     public static void main(String[] args) throws IOException {
 
         String by, temp;
@@ -39,5 +40,6 @@ public class client {
         //System.out.println(text.);
 
     }
+
 
 }

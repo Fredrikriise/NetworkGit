@@ -33,7 +33,7 @@ public class server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(doc.title());
+      //  System.out.println(doc.title());
 
         Element contentDiv = doc.select("div[class=gsrt vk_bk dDoNo]").first();
         Element contentDivK = doc.select("div[class=vk_gy vk_sh]").first();
@@ -46,6 +46,7 @@ public class server {
 
         String text = contentDivK.getElementsByTag("div").text();
         text += " " + contentDiv.getElementsByTag("div").text();
+        System.out.println(temp);
         System.out.println(text);
 
     }
