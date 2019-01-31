@@ -14,11 +14,11 @@ public class Client
         {
             Scanner scn = new Scanner(System.in);
 
-            // getting localhost ip
-            InetAddress ip = InetAddress.getByName("localhost");
+            // brukes til å teste på egen pc
+            //InetAddress ip = InetAddress.getByName("localhost");
 
             // establish the connection with server port 5056
-            Socket s = new Socket(ip, 5555);
+            Socket s = new Socket("10.253.17.90", 5555);
 
             // obtaining input and out streams
             DataInputStream dis = new DataInputStream(s.getInputStream());

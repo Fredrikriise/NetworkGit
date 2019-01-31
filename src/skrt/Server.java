@@ -102,8 +102,10 @@ class ClientHandler extends Thread {
                     Element contentDivK = doc.select("div[class=vk_gy vk_sh]").first();
 
                     if(contentDiv == null) {
-                        System.out.println("Kunne ikke funne lokaltid til " + received);
+                        String feilMelding = "Kunne ikke finne lokaltid til " + received;
+                        System.out.println(feilMelding);
                         // return "Kunne ikke funne lokaltid";
+                        dos.writeUTF(feilMelding);
                     }
 
                     String text = contentDivK.getElementsByTag("div").text();
