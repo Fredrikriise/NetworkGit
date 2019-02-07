@@ -1,7 +1,4 @@
-package skrt;// Java implementation of Server side
-// It contains two classes : Server and ClientHandler
-// Save file as Server.java
-
+package skrt;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,15 +9,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
-// Server class
 public class Server
 {
     public static void main(String[] args) throws IOException {
 
-        // server is listening on port 5056
+        // server port 5555
         ServerSocket ss = new ServerSocket(5555);
 
         // running infinite loop for getting
@@ -32,20 +26,17 @@ public class Server
                 // socket object to receive incoming client requests
                 s = ss.accept();
 
-                System.out.println("A new client is connected : " + s);
+                System.out.println("A new client has connected : " + s);
 
-                // obtaining input and out streams
+                //input and out streams
                 DataInputStream dis = new DataInputStream(s.getInputStream());
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
                 System.out.println("Assigning new thread for this client");
 
-                // create a new thread object
+                //new thread object
                 Thread t = new ClientHandler(s, dis, dos);
-
-                // Invoking the start() method
                 t.start();
-
             } catch (Exception e){
                 s.close();
                 e.printStackTrace();
@@ -54,12 +45,10 @@ public class Server
     }
 }
 
-// ClientHandler class
 class ClientHandler extends Thread {
     final DataInputStream dis;
     final DataOutputStream dos;
     final Socket s;
-
 
     // Constructor
     public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
@@ -73,14 +62,12 @@ class ClientHandler extends Thread {
         String received;
         while (true) {
             try {
-
-                // Ask user what he wants
+                // Ask user what city he is located in
                 dos.writeUTF("Write the city you are currently located in.\n"+
-                        "Type Exit to terminate connection.");
+                        "Type 'Exit' to terminate connection.");
 
-                // receive the answer from client
+                // receive the answer from the client
                 received = dis.readUTF();
-
 
                 if(received.equals("Exit")) {
                     System.out.println("Client " + this.s + " sends exit...");
@@ -89,6 +76,7 @@ class ClientHandler extends Thread {
                     System.out.println("Connection closed");
                     break;
                 } else {
+                    // Jsoup html parser
                     String search = "https://www.google.com/search?q=" + received + "+" + "time";
 
                     Document doc = null;
@@ -101,10 +89,10 @@ class ClientHandler extends Thread {
                     Element contentDiv = doc.select("div[class=gsrt vk_bk dDoNo]").first();
                     Element contentDivK = doc.select("div[class=vk_gy vk_sh]").first();
 
+                    // Could not extract data from the div/city not found
                     if(contentDiv == null) {
-                        String feilMelding = "Kunne ikke finne lokaltid til " + received;
+                        String feilMelding = "Could not find local time in " + received;
                         System.out.println(feilMelding);
-                        // return "Kunne ikke funne lokaltid";
                         dos.writeUTF(feilMelding);
                     }
 
@@ -115,16 +103,15 @@ class ClientHandler extends Thread {
                     dos.writeUTF(text);
 
                 }
-                }catch (IOException e) {
+                    }catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         try {
-            // closing resources
+            // closing DataInputStream and DataOutputStream
             this.dis.close();
             this.dos.close();
-
         }catch(IOException e){
             e.printStackTrace();
         }

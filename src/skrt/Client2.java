@@ -1,11 +1,9 @@
-package skrt;// Java implementation for a client
-// Save file as Client.java
+package skrt;
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-// Client class
 public class Client2
 {
     public static void main(String[] args) throws IOException
@@ -15,12 +13,12 @@ public class Client2
             Scanner scn = new Scanner(System.in);
 
             // getting localhost ip
-            InetAddress ip = InetAddress.getByName("localhost");
+            //InetAddress ip = InetAddress.getByName("localhost");
 
             // establish the connection with server port 5056
-            Socket s = new Socket(ip, 5555);
+            Socket s = new Socket("10.253.17.90", 5555);
 
-            // obtaining input and out streams
+            //input and output streams
             DataInputStream dis = new DataInputStream(s.getInputStream());
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 

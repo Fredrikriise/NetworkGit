@@ -1,26 +1,21 @@
-package skrt;// Java implementation for a client
-// Save file as Client.java
+package skrt;
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-// Client class
 public class Client
 {
     public static void main(String[] args) throws IOException
     {
-        try
-        {
+        try {
+            // Scanner for input in terminal
             Scanner scn = new Scanner(System.in);
 
-            // brukes til å teste på egen pc
-            //InetAddress ip = InetAddress.getByName("localhost");
-
-            // establish the connection with server port 5056
+            // establish the connection with the computer running the server
             Socket s = new Socket("10.253.17.90", 5555);
 
-            // obtaining input and out streams
+            // in and output streams
             DataInputStream dis = new DataInputStream(s.getInputStream());
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
@@ -32,7 +27,7 @@ public class Client
                 String tosend = scn.nextLine();
                 dos.writeUTF(tosend);
 
-                // If client sends exit,close this connection
+                // If client sends Exit,close this connection
                 // and then break from the while loop
                 if(tosend.equals("Exit"))
                 {
